@@ -332,9 +332,7 @@ public class GCMIntentService extends GcmListenerService implements PushConstant
         int requestCode = new Random().nextInt();
         PendingIntent contentIntent = PendingIntent.getActivity(this, requestCode, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationCompat.Builder builder;
-        NotificationCompat.BigTextStyle style;
-        
+     
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setWhen(System.currentTimeMillis())
@@ -342,7 +340,6 @@ public class GCMIntentService extends GcmListenerService implements PushConstant
                         .setTicker(fromHtml(extras.getString(TITLE)))
                         .setContentIntent(contentIntent)
                         .setAutoCancel(true);
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText(options.getText()));
 
         SharedPreferences prefs = context.getSharedPreferences(PushPlugin.COM_ADOBE_PHONEGAP_PUSH, Context.MODE_PRIVATE);
         String localIcon = prefs.getString(ICON, null);
@@ -622,8 +619,7 @@ public class GCMIntentService extends GcmListenerService implements PushConstant
 
             mBuilder.setStyle(bigPicture);
         } else {
-          Toast.makeText(YourActivity.this,"P1bigtext",Toast.LENGTH_SHORT).show();
-            
+            Toast.makeText(YourActivity.this,"P1bigtext",Toast.LENGTH_SHORT).show();
             
             setNotification(notId, "");
 
