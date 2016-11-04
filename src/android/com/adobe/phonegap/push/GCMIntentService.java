@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.NotificationCompat.WearableExtender;
+import android.support.v4.app.NotificationCompat.BigTextStyle;
 import android.support.v4.app.RemoteInput;
 import android.text.Html;
 import android.text.Spanned;
@@ -331,6 +332,9 @@ public class GCMIntentService extends GcmListenerService implements PushConstant
         int requestCode = new Random().nextInt();
         PendingIntent contentIntent = PendingIntent.getActivity(this, requestCode, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        NotificationCompat.Builder builder;
+        NotificationCompat.BigTextStyle style;
+        
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setWhen(System.currentTimeMillis())
@@ -338,6 +342,7 @@ public class GCMIntentService extends GcmListenerService implements PushConstant
                         .setTicker(fromHtml(extras.getString(TITLE)))
                         .setContentIntent(contentIntent)
                         .setAutoCancel(true);
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(options.getText()));
 
         SharedPreferences prefs = context.getSharedPreferences(PushPlugin.COM_ADOBE_PHONEGAP_PUSH, Context.MODE_PRIVATE);
         String localIcon = prefs.getString(ICON, null);
@@ -566,10 +571,13 @@ public class GCMIntentService extends GcmListenerService implements PushConstant
     }
 
     private void setNotificationMessage(int notId, Bundle extras, NotificationCompat.Builder mBuilder) {
+        Toast.makeText(YourActivity.this,"P1",Toast.LENGTH_SHORT).show();
+        
         String message = extras.getString(MESSAGE);
 
         String style = extras.getString(STYLE, STYLE_TEXT);
         if(STYLE_INBOX.equals(style)) {
+            Toast.makeText(YourActivity.this,"P1inbox",Toast.LENGTH_SHORT).show();
             setNotification(notId, message);
 
             mBuilder.setContentText(fromHtml(message));
@@ -601,6 +609,7 @@ public class GCMIntentService extends GcmListenerService implements PushConstant
                 }
             }
         } else if (STYLE_PICTURE.equals(style)) {
+            Toast.makeText(YourActivity.this,"P1picture",Toast.LENGTH_SHORT).show();
             setNotification(notId, "");
 
             NotificationCompat.BigPictureStyle bigPicture = new NotificationCompat.BigPictureStyle();
@@ -613,6 +622,9 @@ public class GCMIntentService extends GcmListenerService implements PushConstant
 
             mBuilder.setStyle(bigPicture);
         } else {
+          Toast.makeText(YourActivity.this,"P1bigtext",Toast.LENGTH_SHORT).show();
+            
+            
             setNotification(notId, "");
 
             NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
